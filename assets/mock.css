@@ -1,0 +1,124 @@
+/* Mock-only additions layered on the captured Claude docs styles. */
+:root { --mock-banner-h: 36px; }
+
+.mock-banner {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+  height: var(--mock-banner-h);
+  display: flex; align-items: center; gap: 10px; padding: 0 16px;
+  background: #141413; color: #faf9f5;
+  font: 450 13px/1.25 system-ui, sans-serif;
+}
+.mock-banner-text { min-width: 0; }
+.mock-banner-text strong { font-weight: 600; }
+@media (max-width: 600px) {
+  :root { --mock-banner-h: 52px; }
+  .mock-banner { padding: 0 12px; font-size: 12px; }
+}
+
+/* Public copy only: the way back to the proposal at the top of the page. */
+.mock-back { margin: 0 0 12px; font-size: 14px; line-height: 1.4; }
+.mock-back a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: currentColor; opacity: .75; }
+.mock-back a:hover { opacity: 1; }
+
+.mock-beta {
+  display: inline-flex; align-items: center; flex: none;
+  margin-left: 8px; padding: 0 7px; border-radius: 999px;
+  font: 500 11px/18px system-ui, sans-serif;
+  letter-spacing: .01em; white-space: nowrap; vertical-align: middle; text-decoration: none;
+  color: #a3482a; background: #f6e4db;
+}
+h1 > .mock-beta { margin-left: 12px; padding: 1px 10px; font-size: 13px; line-height: 22px; vertical-align: .35em; }
+@media (prefers-color-scheme: dark) {
+  html[data-mode="system"] .mock-beta { color: #f3b59a; background: #4a2b20; }
+}
+
+/* Phone navigation: the live site renders its drawer with JavaScript, so the mock reuses the desktop sidebar. */
+/* Existing docs entries stay visible but recede; hovering brings one back for reference. */
+.mock-dim { opacity: .3; transition: opacity .15s ease-out; }
+.mock-dim:hover { opacity: .65; }
+
+/* Wordmark typing: blinking caret while waiting, solid while typing, then two blinks and a fade. */
+.mock-caret {
+  display: inline-block; width: 2px; height: .9em; margin-left: .06em; vertical-align: -.08em;
+  background: currentColor; animation: mock-blink 1.06s steps(1, end) infinite;
+}
+.mock-typing .mock-caret { animation: none; }
+.mock-typed-done .mock-caret { animation: mock-blink 1.06s steps(1, end) 2, mock-caret-out .35s ease-out 2.12s forwards; }
+@keyframes mock-blink { 50% { opacity: 0; } }
+@keyframes mock-caret-out { to { opacity: 0; } }
+
+/* Claude Code-style thinking verb shown next to the spark after the whole wordmark is deleted. */
+.mock-think {
+  display: none; align-items: baseline; gap: .4em; margin-left: .1em; vertical-align: .16em;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: .66em; font-weight: 450; letter-spacing: 0; white-space: nowrap;
+  font-feature-settings: normal; font-variation-settings: normal; color: #d97757;
+}
+.mock-thinking .mock-think { display: inline-flex; }
+.mock-thinking .mock-caret { display: none; }
+.mock-spark { transform-origin: 50% 50%; }
+.mock-verb-window { display: inline-block; overflow: hidden; height: 1.25em; vertical-align: bottom; }
+.mock-verb {
+  background: linear-gradient(90deg, #d97757 0%, #d97757 38%, #f5c4ad 50%, #d97757 62%, #d97757 100%);
+  background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: mock-shimmer 1.5s linear infinite;
+}
+@keyframes mock-shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+.mock-verb { display: inline-block; line-height: 1.25; }
+.mock-verb.out { animation: mock-shimmer 1.5s linear infinite, mock-roll-out .28s ease-in forwards; }
+.mock-verb.in { animation: mock-shimmer 1.5s linear infinite, mock-roll-in .32s ease-out; }
+@keyframes mock-roll-out { to { transform: translateY(-100%); opacity: 0; } }
+@keyframes mock-roll-in { from { transform: translateY(100%); opacity: 0; } }
+/* Reduced motion keeps the typing but drops the blinking, shimmer, and spinning. */
+@media (prefers-reduced-motion: reduce) {
+  .mock-caret { animation: none; }
+  .mock-typed-done .mock-caret { animation: none; opacity: 0; }
+  .mock-verb { animation: none; background: none; -webkit-background-clip: border-box; background-clip: border-box; color: #d97757; }
+}
+
+html.mock-nav-open aside[class*="w-66"] {
+  display: flex !important; left: 0; right: 0; bottom: 0; width: 100% !important; z-index: 50;
+  background: var(--cds-surface-1, #fcfcfb);
+}
+html.mock-nav-open body { overflow: hidden; }
+
+/* Leave dialog: shown before any link or control takes the reader out of the mock. */
+.mock-dialog {
+  width: min(440px, calc(100vw - 32px)); margin: auto; padding: 0; border: 0; border-radius: 16px;
+  background: #fcfcfb; color: #141413;
+  box-shadow: 0 24px 64px rgba(20, 20, 19, .24), 0 0 0 1px rgba(20, 20, 19, .08);
+  font: 400 15px/1.5 system-ui, sans-serif;
+}
+.mock-dialog::backdrop { background: rgba(20, 20, 19, .42); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+.mock-dialog form { padding: 22px 22px 20px; }
+.mock-dialog-tag {
+  display: inline-flex; margin: 0 0 12px; padding: 1px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 500; line-height: 20px; color: #a3482a; background: #f6e4db;
+}
+.mock-dialog h2 {
+  margin: 0 0 8px; font: 500 22px/1.2 Georgia, serif; letter-spacing: -.01em;
+}
+.mock-dialog-body { margin: 0 0 12px; color: #3d3d3a; }
+.mock-dialog-url {
+  margin: 0 0 18px; padding: 8px 10px; border-radius: 8px; background: #f0eee6; color: #3d3d3a;
+  font: 400 12.5px/1.45 ui-monospace, Menlo, monospace; overflow-wrap: anywhere;
+}
+.mock-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+.mock-dialog-stay, .mock-dialog-go {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: 8px;
+  font: 500 14px/1 system-ui, sans-serif; text-decoration: none; cursor: pointer;
+}
+.mock-dialog-stay { border: 1px solid #d8d6cf; background: transparent; color: #141413; }
+.mock-dialog-stay:hover { background: #f0eee6; }
+.mock-dialog-go { border: 1px solid #141413; background: #141413; color: #faf9f5; }
+.mock-dialog-go:hover { background: #30302e; }
+@media (prefers-color-scheme: dark) {
+  .mock-dialog { background: #262624; color: #faf9f5; box-shadow: 0 24px 64px rgba(0, 0, 0, .5), 0 0 0 1px rgba(250, 249, 245, .1); }
+  .mock-dialog-tag { color: #f3b59a; background: #4a2b20; }
+  .mock-dialog-body { color: #c2c0b6; }
+  .mock-dialog-url { background: #1f1e1d; color: #c2c0b6; }
+  .mock-dialog-stay { border-color: #4a4945; color: #faf9f5; }
+  .mock-dialog-stay:hover { background: #30302e; }
+  .mock-dialog-go { border-color: #faf9f5; background: #faf9f5; color: #141413; }
+  .mock-dialog-go:hover { background: #e8e6dc; }
+}
