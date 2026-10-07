@@ -38,6 +38,12 @@ h1 > .mock-beta { margin-left: 12px; padding: 1px 10px; font-size: 13px; line-he
 .mock-dim:hover { opacity: .65; }
 
 /* Wordmark typing: blinking caret while waiting, solid while typing, then two blinks and a fade. */
+.mock-wordmark { display: inline-grid; grid-template-areas: "wordmark"; }
+.mock-wordmark::after {
+  content: "Claude Platform Mocks"; visibility: hidden; grid-area: wordmark;
+  padding-right: calc(2px + .06em);
+}
+.mock-wordmark-content { grid-area: wordmark; white-space: nowrap; }
 .mock-caret {
   display: inline-block; width: 2px; height: .9em; margin-left: .06em; vertical-align: -.08em;
   background: currentColor; animation: mock-blink 1.06s steps(1, end) infinite;
